@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { createGlobalStyle } from 'styled-components';
+// import { useDispatch, useSelector } from 'react-redux';
+import Home from './components/Home/Home';
+import Register from './components/Register/Register';
+import { Routes, Route } from "react-router-dom";
 
 function App() {
+  // const user = useSelector(state => state.userSlice)
+  // const dispatch = useDispatch();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle />
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/Register" element={<Register/>}/>
+      </Routes>
+    </>
   );
 }
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    padding: 0;
+    margin: 0;
+    /* width: 100vw; */
+  }
+`;
 
 export default App;
