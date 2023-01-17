@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
-const item = ['#33a', '#8c9', '#f3e074']
+const IMG_WIDTH = 900
 
 function Slide() {
     const slideref = useRef(null);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
-        console.log(currentIndex)
-        const imgWidth = slideref.current.offsetWidth;
+        // console.log(slideref.current.offsetWidth)
+        const imgWidth = IMG_WIDTH;
         const slideRange = currentIndex * imgWidth;
         slideref.current.style.transition = "all 0.5s ease-in-out";
         slideref.current.style.transform = `translateX(-${slideRange}px)`;
@@ -68,7 +68,7 @@ const Button = styled.button`
 
 const Content = styled.div`
     overflow: hidden;
-    width: 90%;
+    width: ${IMG_WIDTH}px;
     height: 100%;
     /* margin: auto; */
     /* border: 1px solid violet; */
@@ -79,7 +79,7 @@ const Content = styled.div`
 
 const ImgWrapper = styled.div`
     /* background: ${props => props.element}; */
-    width: 100%;
+    width: ${IMG_WIDTH}px;
     height: 100%;
     /* margin: auto; */
     /* border: 1px solid red; */
@@ -87,7 +87,7 @@ const ImgWrapper = styled.div`
 `;
 
 const Img = styled.img`
-    width: 100%;
+    width: ${IMG_WIDTH}px;
     height: 100%;
     /* border: 1px solid green; */
 `;
