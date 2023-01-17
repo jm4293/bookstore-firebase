@@ -1,43 +1,41 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import LoginPerson from "./LoginPerson";
-import LoginCompany from "./LoginCompany";
+import Person from "./Person";
+import Company from "./Company";
 
-function Register() {
+function SignUp() {
     const navigate = useNavigate();
     const [isPerson, setIsPerson] = useState(false);    // [true - 법인] [false - 개인]
 
     return (
         <Frame>
             <Header>
-                <img src="/images/bookstore_logo.png" onClick={() => navigate('/')} style={{ height: "90%", cursor: "pointer" }} />
+                <Img src="/images/logo.jpeg" onClick={() => navigate('/')} />
             </Header>
             <Content>
-                <ContentSelect>
-                    <SelectSpan isPerson={isPerson} onClick={() => setIsPerson(false)}>개인회원</SelectSpan>
-                    <SelectSpan isPerson={isPerson} onClick={() => setIsPerson(true)}>법인회원</SelectSpan>
-                </ContentSelect>
-                <ContentLoginList>
-                    {   
-                        isPerson === true 
-                            ? <LoginCompany/>
-                            : <LoginPerson/>
+                <Select>
+                    <SelectItem isPerson={isPerson} onClick={() => setIsPerson(false)}>개인회원</SelectItem>
+                    <SelectItem isPerson={isPerson} onClick={() => setIsPerson(true)}>법인회원</SelectItem>
+                </Select>
+                <LoginList>
+                    {
+                        isPerson === true ? <Company /> : <Person />
                     }
-                </ContentLoginList>
-                <ContentBenefitBox>
-                    <BenefitCouponBox>
-                        <BenefitBox>
+                </LoginList>
+                <Benefit>
+                    <CouponBox>
+                        <BoxItem>
                             신규회원 특별 혜택
-                        </BenefitBox>
-                    </BenefitCouponBox>
-                    <BenefitCouponBox>
-                        <BenefitBox>
+                        </BoxItem>
+                    </CouponBox>
+                    <CouponBox>
+                        <BoxItem>
                             본인인증 추가 혜택
-                        </BenefitBox>
-                    </BenefitCouponBox>
-                </ContentBenefitBox>
-                <div>
+                        </BoxItem>
+                    </CouponBox>
+                </Benefit>
+                <Etc>
                     {
                         isPerson === true
                             ? <ul>
@@ -48,10 +46,10 @@ function Register() {
                             </ul>
                             : null
                     }
-                </div>
+                </Etc>
             </Content>
             <Footer>
-                <FooterText>@jm4293 bookstore</FooterText>
+                <Text>@jm4293 bookstore</Text>
             </Footer>
         </Frame>
     )
@@ -61,7 +59,13 @@ const Frame = styled.div`
     width: 99vw;
     height: 99vh;
     margin: auto;
+    /* border: 1px solid black; */
     /* background-color: rgb(233, 233, 233); */
+`;
+
+const Img = styled.img`
+    height: 90%;
+    cursor: pointer;
 `;
 
 const Header = styled.div`
@@ -70,29 +74,31 @@ const Header = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid rgb(232, 232, 232);
+    border-bottom: 1px solid rgb(180, 180, 180);
     /* background-color: rgb(211, 211, 211) */
 `;
 
 const Content = styled.div`
-    width: 30%;
+    width: 50%;
     height: 85%;
     margin: auto;
+    /* border: 1px solid black; */
     /* background-color: rgb(191, 191, 191); */
-    /* border-left: 1px solid rgb(232, 232, 232); */
-    /* border-right: 1px solid rgb(232, 232, 232); */
+    border-left: 1px solid rgb(180, 180, 180);
+    border-right: 1px solid rgb(180, 180, 180);
 `;
 
-const ContentSelect = styled.div`
+const Select = styled.div`
     width: 100%;
     height: 5%;
+    /* border-bottom: 1px solid rgb(180, 180, 180); */
     /* background-color: green; */
     display: flex;
     justify-content: space-evenly;
     align-items: center;
 `;
 
-const SelectSpan = styled.span`
+const SelectItem = styled.span`
     cursor: pointer;
     border: 2px solid green;
     border-radius: 10px;
@@ -118,44 +124,57 @@ const SelectSpan = styled.span`
     }
 `;
 
-const ContentLoginList = styled.div`
+const LoginList = styled.div`
     width: 100%;
     height: 35%;
-    /* background-color: rgb(235, 235, 235); */
+    border-bottom: 1px solid rgb(180, 180, 180);
+        /* border: 1px solid blue; */
+    /* background-color: rgb(9, 9, 9); */
 `;
 
-const ContentBenefitBox = styled.div`
+const Benefit = styled.div`
     width: 100%;
     height: 35%;
-    background-color: rgb(205, 205, 205);
+    border-bottom: 1px solid rgb(180, 180, 180);
+
+    /* background-color: rgb(205, 205, 205); */
+    /* border: 1px solid black; */
 `;
 
-const BenefitBox = styled.p`
+const BoxItem = styled.p`
+    width: 100%;
+    height: 100%;
     margin: 0;
     /* background-color: yellow; */
     display: flex;
     justify-content: center;
+    /* border: 1px solid black; */
 `;
 
-const BenefitCouponBox = styled.div`
+const CouponBox = styled.div`
     width: 100%;
     height: 50%;
+`;
+
+const Etc = styled.div`
+    height: 25%;
 `;
 
 const Footer = styled.div`
     width: 100%;
     height: 5%;
     /* background-color: rgb(171, 171, 171); */
-    border-top: 1px solid rgb(232, 232, 232);
+    border-top: 1px solid rgb(180, 180, 180);
+    /* border: 1px solid blue; */
 `;
 
-const FooterText = styled.div`
+const Text = styled.div`
     width: 100%;
     height: 75%;
     display: flex;
     justify-content: center;
     align-items: center;
     /* background-color: rgb(191, 191, 191) */
-`
+`;
 
-export default Register;
+export default SignUp;
