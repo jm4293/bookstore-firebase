@@ -2,8 +2,13 @@ import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 // import { useDispatch, useSelector } from 'react-redux';
 import Home from './components/Home/Home';
-import Register from './components/Register/Register';
+import SignUp from './components/SignUp/SignUp';
+import Agree from './components/SignUp/Agree';
+import Register from './components/SignUp/Register';
+import SignIn from './components/SignIn/SignIn';
+import Admin from './components/Admin/Admin';
 import { Routes, Route } from "react-router-dom";
+import app from './Firebase/firebase';
 
 function App() {
   // const user = useSelector(state => state.userSlice)
@@ -14,7 +19,11 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Home/>}/>
-        <Route path="/Register" element={<Register/>}/>
+        <Route path="/signup" element={<SignUp/>}/>
+        <Route path="/signup/agree" element={<Agree/>}/>
+        <Route path="/signup/register" element={<Register/>}/>
+        <Route path="/signin" element={<SignIn/>}/>
+        <Route path="/admin" element={<Admin/>}/>
       </Routes>
     </>
   );
