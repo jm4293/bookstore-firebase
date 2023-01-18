@@ -9,8 +9,10 @@ function Company() {
                 <input type="text" style={{lineHeight: "30px"}}/>
                 <div>법인명</div>
                 <input type="text" style={{lineHeight: "30px"}}/>
-                <StyledButton>인증하기</StyledButton>
             </ListWrap>
+            <ButtonWrap>
+                <Button>인증하기</Button>
+            </ButtonWrap>
         </Frame>
     )
 }
@@ -24,7 +26,7 @@ const Frame = styled.div`
 
 const ListWrap = styled.div`
     width: 100%;
-    height: 100%;
+    height: 60%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -32,12 +34,19 @@ const ListWrap = styled.div`
     /* border: 1px solid blue; */
 `;
 
-const StyledButton = styled.button`
-    width: 100%;
-    height: 20%;
+const ButtonWrap = styled.div`
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  //align-content: center;
+`;
+
+const Button = styled.button`
+    width: 80%;
+    height: 40%;
     /* margin-top: 30px; */
-    /* margin: auto; */
-    /* margin: auto 0; */
+    margin: auto;
     color: white;
     font-weight: 500;
     font-size: 16px;
