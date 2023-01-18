@@ -4,15 +4,15 @@ import styled from "styled-components";
 const IMG_WIDTH = 900
 
 function Slide() {
-    const slideref = useRef(null);
+    const slideRef = useRef(null);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         // console.log(slideref.current.offsetWidth)
-        const imgWidth = IMG_WIDTH;
-        const slideRange = currentIndex * imgWidth;
-        slideref.current.style.transition = "all 0.5s ease-in-out";
-        slideref.current.style.transform = `translateX(-${slideRange}px)`;
+        // const imgWidth = IMG_WIDTH;
+        const slideRange = currentIndex * IMG_WIDTH;
+        slideRef.current.style.transition = "all 0.5s ease-in-out";
+        slideRef.current.style.transform = `translateX(-${slideRange}px)`;
     }, [currentIndex])
 
     useEffect(() => {
@@ -37,7 +37,7 @@ function Slide() {
         <Frame>
             <Button onClick={() => movePrev()}>이전</Button>
             <Content>
-                <ImgWrapper ref={slideref}>
+                <ImgWrapper ref={slideRef}>
                     <Img src="/images/slide/slide_1.jpg" />
                     <Img src="/images/slide/slide_2.jpg" />
                     <Img src="/images/slide/slide_3.jpg" />
