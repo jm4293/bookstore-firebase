@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 
 function SignIn() {
     const navigate = useNavigate();
@@ -10,29 +10,31 @@ function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const signin = async () => {
+    const sign_in = async () => {
         try {
             const auth = getAuth();
             const result = await signInWithEmailAndPassword(auth, email, password)
             console.log(result);
             alert("로그인 되었습니다.");
             navigate('/');
-        }
-        catch(err){
-            console.log(err.code);
+        } catch (err) {
+            // console.log(err.code);
             // console.log(error.message);
-            switch(err.code){
+
+            switch (err.code) {
                 case 'auth/wrong-password' :
                     alert("비밀번호 6자리 이상 또는 비밀번호 잘못 입력");
                     break;
                 case 'auth/invalid-email' :
-                    alert("없는 이메일 입니다");
+                    alert("이메일 잘못 일력");
                     break;
                 case 'auth/user-not-found' :
-                    alert("없는 이메일 입니다");
+                    alert("없는 이메일");
                     break;
                 case 'auth/too-many-requests' :
                     alert("너무 많은 요청 잠시만 기다려 주세요");
+                    break;
+                default:
                     break;
             }
         }
@@ -41,7 +43,7 @@ function SignIn() {
     return (
         <Frame>
             <Header>
-                <img src="/images/logo.jpeg" onClick={() => navigate('/')} style={{ height: "90%", cursor: "pointer" }} />
+                <img src="/images/logo.jpeg" onClick={() => navigate('/')} style={{height: "90%", cursor: "pointer"}}/>
             </Header>
             <Content>
                 <Select>
@@ -49,12 +51,10 @@ function SignIn() {
                     <SelectItem isPerson={isPerson} onClick={() => setIsPerson(true)}>법인회원</SelectItem>
                 </Select>
                 <Input>
-                    <label for="id"><div>아이디(이메일형식)</div></label>
-                    <input type="email" onChange={e => setEmail(e.target.value)} id="id" />
-                    <label for="password"><div>비밀번호</div></label>
-                    <input type="text" onChange={e => setPassword(e.target.value)} id="password" />
-                    <Link to="/signup" ><button>회원가입</button></Link>
-                    <button type="submit" onClick={() => signin()}>로그인</button>
+                    <InputEmail type="email" onChange={e => setEmail(e.target.value)} placeholder="이메일을 입력해 주세요."/>
+                    <InputPassword type="password" onChange={e => setPassword(e.target.value)} placeholder="비밀번호를 입력해주세요.(6자리 이상)"/>
+                    <ButtonSignIn type="submit" onClick={() => sign_in()}>로그인</ButtonSignIn>
+                    <ButtonSignUp onClick={() => navigate("/signup")}>회원가입</ButtonSignUp>
                 </Input>
             </Content>
             <Footer>
@@ -65,91 +65,134 @@ function SignIn() {
 }
 
 const Frame = styled.div`
-    width: 99vw;
-    height: 99vh;
-    margin: auto;
-    /* background-color: rgb(233, 233, 233); */
+  width: 99vw;
+  height: 99vh;
+  margin: auto;
+  /* background-color: rgb(233, 233, 233); */
 `;
 
 const Header = styled.div`
-    width: 100%;
-    height: 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid rgb(232, 232, 232);
-    /* background-color: rgb(211, 211, 211) */
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid rgb(232, 232, 232);
+  /* background-color: rgb(211, 211, 211) */
 `;
 
 const Content = styled.div`
-    width: 50%;
-    height: 85%;
-    margin: auto;
+  width: 50%;
+  height: 85%;
+  margin: auto;
 
-    /* background-color: rgb(191, 191, 191); */
-    border-left: 1px solid rgb(180, 180, 180);
-    border-right: 1px solid rgb(180, 180, 180);
+  /* background-color: rgb(191, 191, 191); */
+  border-left: 1px solid rgb(180, 180, 180);
+  border-right: 1px solid rgb(180, 180, 180);
 `;
 
 const Select = styled.div`
-    width: 100%;
-    height: 5%;
-    /* background-color: green; */
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+  width: 100%;
+  height: 5%;
+  /* background-color: green; */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 `;
 
 const Input = styled.div`
-    width: 100%;
-    height: 80%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const InputEmail = styled.input`
+  border-color: rgb(207, 207, 207);
+  width: 50%;
+  height: 4%;
+  border-radius: 10px 10px 0 0;
+`;
+
+const InputPassword = styled.input`
+  border-color: rgb(207, 207, 207);
+  width: 50%;
+  height: 4%;
+  border-radius: 0 0 10px 10px;
+`;
+
+const ButtonSignIn = styled.button`
+  border: 0;
+  margin-top: 20px;
+  width: 50%;
+  height: 25px;
+  background-color: rgb(107, 107, 107);
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+
+  &:hover {
+    background-color: rgb(85, 85, 85);
+  }
+`;
+
+const ButtonSignUp = styled.button`
+  margin-top: 20px;
+  width: 50%;
+  height: 25px;
+
+  border-color: rgb(74, 75, 164);
+  background-color: white;
+  color: rgb(65, 67, 138);
+  cursor: pointer;
+  border-radius: 10px;
+
+  &:hover {
+    background-color: rgb(238, 238, 246);
+  }
 `;
 
 const SelectItem = styled.span`
-    cursor: pointer;
-    border: 2px solid green;
-    border-radius: 10px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  cursor: pointer;
+  border: 2px solid green;
+  border-radius: 10px 10px 0 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    &:first-child{
-        border-top: ${props => props.isPerson ? "none" : null};
-        border-left: ${props => props.isPerson ? "none" : null};
-        border-right: ${props => props.isPerson ? "none" : null};
-        border-bottom: ${props => props.isPerson ? null : "none"};
-    }
-    &:last-child{
-        border-top: ${props => props.isPerson ? null : "none"};
-        border-left: ${props => props.isPerson ? null : "none"};
-        border-right: ${props => props.isPerson ? null : "none"};
-        border-bottom: ${props => props.isPerson ? "none" : null};
-    }
+  &:first-child {
+    border-top: ${props => props.isPerson ? "none" : null};
+    border-left: ${props => props.isPerson ? "none" : null};
+    border-right: ${props => props.isPerson ? "none" : null};
+    border-bottom: ${props => props.isPerson ? null : "none"};
+  }
+
+  &:last-child {
+    border-top: ${props => props.isPerson ? null : "none"};
+    border-left: ${props => props.isPerson ? null : "none"};
+    border-right: ${props => props.isPerson ? null : "none"};
+    border-bottom: ${props => props.isPerson ? "none" : null};
+  }
 `;
 
-
 const Footer = styled.div`
-    width: 100%;
-    height: 5%;
-    /* background-color: rgb(171, 171, 171); */
-    border-top: 1px solid rgb(180, 180, 180);
+  width: 100%;
+  height: 5%;
+  /* background-color: rgb(171, 171, 171); */
+  border-top: 1px solid rgb(180, 180, 180);
 `;
 
 const FooterText = styled.div`
-    width: 100%;
-    height: 75%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* background-color: rgb(191, 191, 191) */
-`
+  width: 100%;
+  height: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: rgb(191, 191, 191) */
+`;
 
 export default SignIn;
