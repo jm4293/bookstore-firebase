@@ -1,18 +1,19 @@
-import React, { useRef, useEffect, useState, useMemo } from "react";
+import React, {useRef, useEffect, useState} from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import { AiOutlineSearch, AiOutlineShoppingCart, AiOutlineLogin } from "react-icons/ai"
-import { BsPersonFill } from "react-icons/bs";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {Link, useNavigate} from "react-router-dom";
+import {AiOutlineSearch, AiOutlineShoppingCart} from "react-icons/ai"
+import {BsPersonFill} from "react-icons/bs";
+import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
+
 
 function Header() {
-    const [scrollPosition, setScrollPosition] = useState(0);
     const [change, setChange] = useState(false);
-    const [isLogin, setIsLogin] = useState();
-    let scrollref = useRef(null);
+    const [isLogin, setIsLogin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+    let scrollRef = useRef(null);
     let navigate = useNavigate();
 
-
+    // 로그인되어있으면 메뉴바 로그아웃으로 로그인 안되어있으면 메뉴바 로그인으로
     useEffect(() => {
         const auth = getAuth();
         console.log("auth ", auth)
@@ -20,23 +21,21 @@ function Header() {
         // console.log(user)
 
         onAuthStateChanged(auth, (user) => {
-            console.log("user ", user)
+            // console.log("user ", user)
             if (user.uid) {
+                user.uid === process.env.REACT_APP_ADMIN ? setIsAdmin(true) : setIsAdmin(false);
                 setIsLogin(true);
             } else {
                 setIsLogin(false);
-                console.log("xxxxx")
             }
-        }, []);
+        });
     }, [])
 
+    // 스크롤할때 메뉴바 컨트롤
     const handleScroll = () => {
-        // setScrollPosition(window.scrollY);
-
-        if (window.scrollY > scrollref.current.offsetTop) {
+        if (window.scrollY > scrollRef.current.offsetTop) {
             setChange(true)
-        }
-        else {
+        } else {
             setChange(false)
         }
 
@@ -54,181 +53,192 @@ function Header() {
         };
     }, []);
 
+    // 로그아웃 클릭
+    const sign_out = () => {
+        const auth = getAuth();
+        signOut(auth).then(() => {
+            // navigate('/');
+            alert("로그아웃 성공");
+            window.location.replace('/');
+            // Sign-out successful.
+        }).catch((error) => {
+            console.log(error)
+            alert("로그아웃 실패")
+            // An error happened.
+        });
+    }
 
     return (
         <Frame change={change}>
             <Top>
-                <StyledUl_Top>
-                    <StyledLi_Top>
-                        <StyledLink to="/admin">관리자 페이지</StyledLink>
-                    </StyledLi_Top>
-                    <div style={{ flexGrow: "1" }}></div>
-                    <StyledLi_Top>
+                <UlTop>
+                    <div>
+                        {
+                            isAdmin ? <StyledLink to="/admin">관리자 페이지</StyledLink> : null
+                        }
+                    </div>
+                    <div style={{flexGrow: "1"}}></div>
+                    <LiTop>
                         <StyledLink to="/signup">회원가입</StyledLink>
-                    </StyledLi_Top>
-                    <StyledLi_Top>
-                        <StyledLink to="/signin">{isLogin ? "로그아웃" : "로그인"}</StyledLink>
-                    </StyledLi_Top>
-                </StyledUl_Top>
+                    </LiTop>
+                    <LiTop>
+                        {
+                            isLogin ? <span onClick={() => sign_out()} style={{cursor: "pointer"}}>로그아웃</span> :
+                                <StyledLink to="/signin">로그인</StyledLink>
+                        }
+                    </LiTop>
+                </UlTop>
             </Top>
             <Middle>
                 <Logo>
-                    <img src="/images/logo.jpeg" onClick={() => navigate('/')} style={{ height: "80%", cursor: "pointer" }} />
+                    <img src="/images/logo.jpeg" onClick={() => navigate('/')}
+                         style={{height: "80%", cursor: "pointer"}}/>
                 </Logo>
                 <Search>
                     <SearchBar>
-                        <SearchLeft>
-                            통합검색
-                        </SearchLeft>
-                        <SearchRight>
-                            <StyledInput type="search" />
-                        </SearchRight>
-                        <AiOutlineSearch style={{ transform: "scale(1.7)" }} />
+                        <SearchLeft> 통합검색 </SearchLeft>
+                        <SearchRight> <StyledInput type="search"/> </SearchRight>
+                        <AiOutlineSearch style={{transform: "scale(1.7)"}}/>
                     </SearchBar>
-                    <div style={{ flexGrow: "1" }} />
+                    <div style={{flexGrow: "1"}}/>
                     <Basket>
-                        <AiOutlineShoppingCart style={{ transform: "scale(1.6)" }} />
+                        <AiOutlineShoppingCart style={{transform: "scale(1.6)"}}/>
                     </Basket>
                     <User>
-                        <BsPersonFill style={{ transform: "scale(1.6)", margin: "0 50px" }} />
+                        <BsPersonFill style={{transform: "scale(1.6)", margin: "0 50px"}}/>
                     </User>
                 </Search>
             </Middle>
-            <Bottom ref={scrollref} change={change}>
-                <StyledUl_Bottom>
-                    <StyledLi_Bottom>
-                        <StyledLink>메뉴1</StyledLink>
-                    </StyledLi_Bottom>
-                    <StyledLi_Bottom>
-                        <StyledLink>메뉴2</StyledLink>
-                    </StyledLi_Bottom>
-                    <StyledLi_Bottom>
-                        <StyledLink>메뉴3</StyledLink>
-                    </StyledLi_Bottom>
-                    <StyledLi_Bottom>
-                        <StyledLink>메뉴4</StyledLink>
-                    </StyledLi_Bottom>
+            <Bottom ref={scrollRef} change={change}>
+                <UlBottom>
+                    <LiBottom> <StyledLink>메뉴1</StyledLink> </LiBottom>
+                    <LiBottom> <StyledLink>메뉴2</StyledLink> </LiBottom>
+                    <LiBottom> <StyledLink>메뉴3</StyledLink> </LiBottom>
+                    <LiBottom> <StyledLink>메뉴4</StyledLink> </LiBottom>
                     <div style={{flexGrow: "1"}}></div>
-                    <StyledLi_Hidden change={change}>
-                        <StyledLink>회원가입</StyledLink>
-                    </StyledLi_Hidden>
-                    <StyledLi_Hidden change={change}>
-                        <StyledLink>{isLogin ? "로그아웃" : "로그인"}</StyledLink>
-                    </StyledLi_Hidden>
-                </StyledUl_Bottom>
+                    <LiHidden change={change}>
+                        <StyledLink to="/signup">회원가입</StyledLink>
+                    </LiHidden>
+                    <LiHidden change={change}>
+                        {
+                            isLogin ? <span onClick={() => sign_out()} style={{cursor: "pointer"}}>로그아웃</span> :
+                                <StyledLink to="/signin">로그인</StyledLink>
+                        }
+                    </LiHidden>
+                </UlBottom>
             </Bottom>
         </Frame>
     )
 }
 
 const Frame = styled.div`
-    /* position: relative; */
-    width: 100%;
-    height: ${props => props.change ? 260 : 280}px;
-    /* border-bottom: 1px solid black; */
-    /* top: -160px; */
-    /* z-index: 999; */
+  /* position: relative; */
+  width: 100%;
+  height: ${props => props.change ? 260 : 280}px;
+  /* border-bottom: 1px solid black; */
+  /* top: -160px; */
+  /* z-index: 999; */
 `;
 
 const Top = styled.div`
-    /* width: 100%; */
-    height: 60px;
-    border-bottom: 1px solid black;
+  /* width: 100%; */
+  height: 60px;
+  border-bottom: 1px solid black;
 `;
 
-const StyledUl_Top = styled.ul`
-    margin: 0;
-    height: 100%;
-    display: flex;
-    justify-content: end;
-    align-items: center;
+const UlTop = styled.ul`
+  margin: 0;
+  height: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
 `;
 
-const StyledLi_Top = styled.li`
-    list-style: none;
+const LiTop = styled.li`
+  list-style: none;
 
-    &::after{
-        content: "";
-        display: inline-block;
-        width: 1px;
-        height: 10px;
-        margin: 10px 10px 0;
-        background-color: black;
-        opacity: 0.4;
-    }
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 10px;
+    margin: 10px 10px 0;
+    background-color: black;
+    opacity: 0.4;
+  }
 `;
 
 const Middle = styled.div`
-    /* width: 100%; */
-    height: 140px;
-    display: flex;
-    /* border-bottom: 1px solid black; */
-    /* position: sticky;
-    top: 0; */
+  /* width: 100%; */
+  height: 140px;
+  display: flex;
+  /* border-bottom: 1px solid black; */
+  /* position: sticky;
+  top: 0; */
 `;
 
 const Logo = styled.div`
-    min-width: 350px;
-    width: 25vw;
-    height: 100%;
-    /* background-color: gainsboro; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  min-width: 350px;
+  width: 25vw;
+  height: 100%;
+  /* background-color: gainsboro; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Search = styled.div`
-    width: 80vw;
-    height: 100%;
-    border-left: 1px solid black;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  width: 80vw;
+  height: 100%;
+  border-left: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const SearchBar = styled.div`
-    width: 65%;
-    height: 30%;
-    margin-left: 40px;
-    padding: 0 20px;
-    border: 1px solid black;
-    border-radius: 400px;
-    display: flex;
-    align-items: center;
+  width: 65%;
+  height: 30%;
+  margin-left: 40px;
+  padding: 0 20px;
+  border: 1px solid black;
+  border-radius: 400px;
+  display: flex;
+  align-items: center;
 `;
 
 const SearchLeft = styled.div`
-    min-width: 70px;
-    height: 100%;
-    /* background-color: yellow; */
-    display: flex; 
-    align-items: center;
-    justify-content: center;
+  min-width: 70px;
+  height: 100%;
+  /* background-color: yellow; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const SearchRight = styled.div`
-    width: 100%;
-    height: 100%;
-    /* background-color: yellow; */
+  width: 100%;
+  height: 100%;
+  /* background-color: yellow; */
 
-    &::before{
-        content: "";
-        border: 1px solid black;
-        opacity: 0.2;
-        margin-right: 10px;
-    }
+  &::before {
+    content: "";
+    border: 1px solid black;
+    opacity: 0.2;
+    margin-right: 10px;
+  }
 `;
 
 const StyledInput = styled.input`
-    width: 100%;
-    height: 100%;
-    border: 0;
-    font-size: 16px;
-    /* margin-left: 30px; */
+  width: 100%;
+  height: 100%;
+  border: 0;
+  font-size: 16px;
+  /* margin-left: 30px; */
 
-    &:focus, :active {
-        outline: none;
-    }
+  &:focus, :active {
+    outline: none;
+  }
 `;
 
 const Basket = styled.div`
@@ -241,50 +251,50 @@ const User = styled.div`
 
 const Bottom = styled.div`
     /* width: ${props => props.change ? 90 : 90}%; */
-    width: 90%;
-    height: ${props => props.change ? 40 : 100}px;
-    position: ${props => props.change ? "fixed" : "absolute"};
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    top: ${props => props.change ? 0 : null};
-    z-index: 1000;
-    /* top: 160px; */
-    /* background-color: green; */
+  width: 90%;
+  height: ${props => props.change ? 40 : 100}px;
+  position: ${props => props.change ? "fixed" : "absolute"};
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  top: ${props => props.change ? 0 : null};
+  z-index: 1000;
+  /* top: 160px; */
+  /* background-color: green; */
     /* position: ${props => props.isScroll}; */
-    /* display: flex; */
-    /* align-items: center; */
-    transition: all 0.2s;
-    background-color: rgb(255, 255, 255)
+  /* display: flex; */
+  /* align-items: center; */
+  transition: all 0.2s;
+  background-color: rgb(255, 255, 255)
 `;
 
-const StyledUl_Bottom = styled.ul`
-    margin: 0;
-    height: 100%;
-    display: flex;
-    justify-content: start;
-    align-items: center;
+const UlBottom = styled.ul`
+  margin: 0;
+  height: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
 `;
 
-const StyledLi_Bottom = styled.li`
-    list-style: none;
+const LiBottom = styled.li`
+  list-style: none;
 
-    &::after{
-        content: "";
-        display: inline-block;
-        width: 1px;
-        height: 10px;
-        margin: 10px 10px 0;
-        background-color: black;
-        opacity: 0.4;
-    }
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 10px;
+    margin: 10px 10px 0;
+    background-color: black;
+    opacity: 0.4;
+  }
 `;
 
-const StyledLi_Hidden = styled(StyledLi_Bottom)`
-    display: ${props => props.change ? "block" : "none"};
+const LiHidden = styled(LiBottom)`
+  display: ${props => props.change ? "block" : "none"};
 `;
 
 const StyledLink = styled(Link)`
-    text-decoration: none;
+  text-decoration: none;
 `;
 
 export default Header;
