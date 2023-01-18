@@ -33,4 +33,5 @@
 ## 컴포넌트 순서
 - 회원가입: SignUp.jsx -> Person.jsx -> Agree.jsx -> Register.jsx -> Home.jsx
 - 로그인: SignIn.jsx -> Home.jsx
-- 관리자 로그인: ID: admin@admin.com, PASSWORD: 123456
+- 관리자 로그인: ID: admin@gmail.com, PASSWORD: 123456
+- 관리자 로그인시 관리자페이지 버튼이 나타남 -> 관리자 페이지에서 상품을 저장, 수정, 삭제 가능
