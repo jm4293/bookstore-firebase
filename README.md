@@ -1,7 +1,7 @@
 # 도서판매 프로젝트
 1. 회원가입 - firebase
 2. 로그인 - firebase
-3. 장바구니 - firestore
+3. 장바구니 - localstorage
 
 ## 개발언어 
 - React
