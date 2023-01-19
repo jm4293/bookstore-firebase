@@ -23,6 +23,7 @@
 
 ## 실행 방법
 - npm start
+- https://bookstore-6c407.firebaseapp.com/
 
 ## 실행 과정
 - 클라이언트 실행 -> localhost:3000 접속
