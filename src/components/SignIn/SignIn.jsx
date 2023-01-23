@@ -18,9 +18,6 @@ function SignIn() {
             alert("로그인 되었습니다.");
             navigate('/');
         } catch (err) {
-            // console.log(err.code);
-            // console.log(error.message);
-
             switch (err.code) {
                 case 'auth/wrong-password' :
                     alert("비밀번호 6자리 이상 또는 비밀번호 잘못 입력");
@@ -68,7 +65,6 @@ const Frame = styled.div`
   width: 99vw;
   height: 99vh;
   margin: auto;
-  /* background-color: rgb(233, 233, 233); */
 `;
 
 const Header = styled.div`
@@ -77,24 +73,17 @@ const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid rgb(232, 232, 232);
-  /* background-color: rgb(211, 211, 211) */
 `;
 
 const Content = styled.div`
   width: 50%;
   height: 85%;
   margin: auto;
-
-  /* background-color: rgb(191, 191, 191); */
-  border-left: 1px solid rgb(180, 180, 180);
-  border-right: 1px solid rgb(180, 180, 180);
 `;
 
 const Select = styled.div`
   width: 100%;
   height: 5%;
-  /* background-color: green; */
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -127,7 +116,7 @@ const ButtonSignIn = styled.button`
   border: 0;
   margin-top: 20px;
   width: 50%;
-  height: 25px;
+  height: 30px;
   background-color: rgb(107, 107, 107);
   color: white;
   cursor: pointer;
@@ -141,7 +130,7 @@ const ButtonSignIn = styled.button`
 const ButtonSignUp = styled.button`
   margin-top: 20px;
   width: 50%;
-  height: 25px;
+  height: 30px;
 
   border-color: rgb(74, 75, 164);
   background-color: white;
@@ -182,7 +171,6 @@ const SelectItem = styled.span`
 const Footer = styled.div`
   width: 100%;
   height: 5%;
-  /* background-color: rgb(171, 171, 171); */
   border-top: 1px solid rgb(180, 180, 180);
 `;
 
@@ -192,7 +180,6 @@ const FooterText = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: rgb(191, 191, 191) */
 `;
 
 export default SignIn;

@@ -1,27 +1,22 @@
 import React, {useRef, useEffect, useState} from "react";
 import styled from "styled-components";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {AiOutlineSearch, AiOutlineShoppingCart} from "react-icons/ai"
 import {BsPersonFill} from "react-icons/bs";
 import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
 
-
 function Header() {
-    const [change, setChange] = useState(false);
+    const [isChange, setIsChange] = useState(false);
     const [isLogin, setIsLogin] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     let scrollRef = useRef(null);
-    let navigate = useNavigate();
 
-    // 로그인되어있으면 메뉴바 로그아웃으로 로그인 안되어있으면 메뉴바 로그인으로
+    // 로그인되어있으면 메뉴바 로그아웃, 로그인 안되어있으면 메뉴바 로그인
     useEffect(() => {
         const auth = getAuth();
-        console.log("auth ", auth)
-        // const user = auth.currentUser;
-        // console.log(user)
 
+        // 관리자 페이지 활성화 설정
         onAuthStateChanged(auth, (user) => {
-            // console.log("user ", user)
             if (user.uid) {
                 user.uid === process.env.REACT_APP_ADMIN ? setIsAdmin(true) : setIsAdmin(false);
                 setIsLogin(true);
@@ -34,12 +29,11 @@ function Header() {
     // 스크롤할때 메뉴바 컨트롤
     const handleScroll = () => {
         if (window.scrollY > scrollRef.current.offsetTop) {
-            setChange(true)
+            setIsChange(true)
         } else {
-            setChange(false)
+            setIsChange(false)
         }
-
-        // console.log(scrollref.current.offsetTop)
+        // console.log(scrollRef.current.offsetTop)
         // console.log(window.scrollY);
     };
 
@@ -57,19 +51,16 @@ function Header() {
     const sign_out = () => {
         const auth = getAuth();
         signOut(auth).then(() => {
-            // navigate('/');
             alert("로그아웃 성공");
             window.location.replace('/');
-            // Sign-out successful.
         }).catch((error) => {
             console.log(error)
             alert("로그아웃 실패")
-            // An error happened.
         });
     }
 
     return (
-        <Frame change={change}>
+        <Frame change={isChange}>
             <Top>
                 <UlTop>
                     <div>
@@ -83,46 +74,43 @@ function Header() {
                     </LiTop>
                     <LiTop>
                         {
-                            isLogin ? <span onClick={() => sign_out()} style={{cursor: "pointer"}}>로그아웃</span> :
-                                <StyledLink to="/signin">로그인</StyledLink>
+                            isLogin ? <span onClick={() => sign_out()} style={{cursor: "pointer", color: "black"}}>로그아웃</span> : <StyledLink to="/signin">로그인</StyledLink>
                         }
                     </LiTop>
                 </UlTop>
             </Top>
             <Middle>
                 <Logo>
-                    <img src="/images/logo.jpeg" onClick={() => navigate('/')}
-                         style={{height: "80%", cursor: "pointer"}}/>
+                    <img src="/images/logo.jpeg" onClick={() => window.location.replace('/')} style={{height: "80%", cursor: "pointer"}}/>
                 </Logo>
                 <Search>
                     <SearchBar>
-                        <SearchLeft> 통합검색 </SearchLeft>
-                        <SearchRight> <StyledInput type="search"/> </SearchRight>
-                        <AiOutlineSearch style={{transform: "scale(1.7)"}}/>
+                        <SearchBarLeft>통합검색</SearchBarLeft>
+                        <SearchBarRight><StyledInput type="search"/></SearchBarRight>
+                        <AiOutlineSearch style={{transform: "scale(1.7)", cursor: "pointer"}}/>
                     </SearchBar>
                     <div style={{flexGrow: "1"}}/>
                     <Basket>
-                        <AiOutlineShoppingCart style={{transform: "scale(1.6)"}}/>
+                        <AiOutlineShoppingCart style={{transform: "scale(1.6)", marginLeft: "20px"}}/>
                     </Basket>
                     <User>
-                        <BsPersonFill style={{transform: "scale(1.6)", margin: "0 50px"}}/>
+                        <BsPersonFill style={{transform: "scale(1.6)", margin: "0 30px"}}/>
                     </User>
                 </Search>
             </Middle>
-            <Bottom ref={scrollRef} change={change}>
+            <Bottom ref={scrollRef} change={isChange}>
                 <UlBottom>
-                    <LiBottom> <StyledLink>메뉴1</StyledLink> </LiBottom>
-                    <LiBottom> <StyledLink>메뉴2</StyledLink> </LiBottom>
-                    <LiBottom> <StyledLink>메뉴3</StyledLink> </LiBottom>
-                    <LiBottom> <StyledLink>메뉴4</StyledLink> </LiBottom>
+                    <LiBottom><StyledLink>베스트</StyledLink></LiBottom>
+                    <LiBottom><StyledLink>신상품</StyledLink></LiBottom>
+                    <LiBottom><StyledLink>이벤트</StyledLink></LiBottom>
+                    <LiBottom><StyledLink>사은품</StyledLink></LiBottom>
                     <div style={{flexGrow: "1"}}></div>
-                    <LiHidden change={change}>
+                    <LiHidden change={isChange}>
                         <StyledLink to="/signup">회원가입</StyledLink>
                     </LiHidden>
-                    <LiHidden change={change}>
+                    <LiHidden change={isChange}>
                         {
-                            isLogin ? <span onClick={() => sign_out()} style={{cursor: "pointer"}}>로그아웃</span> :
-                                <StyledLink to="/signin">로그인</StyledLink>
+                            isLogin ? <span onClick={() => sign_out()} style={{cursor: "pointer"}}>로그아웃</span> : <StyledLink to="/signin">로그인</StyledLink>
                         }
                     </LiHidden>
                 </UlBottom>
@@ -132,16 +120,11 @@ function Header() {
 }
 
 const Frame = styled.div`
-  /* position: relative; */
   width: 100%;
   height: ${props => props.change ? 260 : 280}px;
-  /* border-bottom: 1px solid black; */
-  /* top: -160px; */
-  /* z-index: 999; */
 `;
 
 const Top = styled.div`
-  /* width: 100%; */
   height: 60px;
   border-bottom: 1px solid black;
 `;
@@ -169,26 +152,21 @@ const LiTop = styled.li`
 `;
 
 const Middle = styled.div`
-  /* width: 100%; */
   height: 140px;
   display: flex;
-  /* border-bottom: 1px solid black; */
-  /* position: sticky;
-  top: 0; */
 `;
 
 const Logo = styled.div`
   min-width: 350px;
-  width: 25vw;
+  width: 25%;
   height: 100%;
-  /* background-color: gainsboro; */
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const Search = styled.div`
-  width: 80vw;
+  width: 75%;
   height: 100%;
   border-left: 1px solid black;
   display: flex;
@@ -207,19 +185,17 @@ const SearchBar = styled.div`
   align-items: center;
 `;
 
-const SearchLeft = styled.div`
+const SearchBarLeft = styled.div`
   min-width: 70px;
   height: 100%;
-  /* background-color: yellow; */
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-const SearchRight = styled.div`
+const SearchBarRight = styled.div`
   width: 100%;
   height: 100%;
-  /* background-color: yellow; */
 
   &::before {
     content: "";
@@ -234,7 +210,6 @@ const StyledInput = styled.input`
   height: 100%;
   border: 0;
   font-size: 16px;
-  /* margin-left: 30px; */
 
   &:focus, :active {
     outline: none;
@@ -250,7 +225,6 @@ const User = styled.div`
 `;
 
 const Bottom = styled.div`
-    /* width: ${props => props.change ? 90 : 90}%; */
   width: 90%;
   height: ${props => props.change ? 40 : 100}px;
   position: ${props => props.change ? "fixed" : "absolute"};
@@ -258,11 +232,6 @@ const Bottom = styled.div`
   border-bottom: 1px solid black;
   top: ${props => props.change ? 0 : null};
   z-index: 1000;
-  /* top: 160px; */
-  /* background-color: green; */
-    /* position: ${props => props.isScroll}; */
-  /* display: flex; */
-  /* align-items: center; */
   transition: all 0.2s;
   background-color: rgb(255, 255, 255)
 `;
@@ -295,6 +264,7 @@ const LiHidden = styled(LiBottom)`
 
 const StyledLink = styled(Link)`
   text-decoration: none;
+  color: black;
 `;
 
 export default Header;

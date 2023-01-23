@@ -23,18 +23,6 @@ function SignUp() {
                         isPerson === true ? <Company/> : <Person/>
                     }
                 </LoginList>
-                <Benefit>
-                    <CouponBox>
-                        <BoxItem>
-                            신규회원 특별 혜택
-                        </BoxItem>
-                    </CouponBox>
-                    <CouponBox>
-                        <BoxItem>
-                            본인인증 추가 혜택
-                        </BoxItem>
-                    </CouponBox>
-                </Benefit>
                 <Etc>
                     {
                         isPerson === true
@@ -59,8 +47,6 @@ const Frame = styled.div`
   width: 99vw;
   height: 99vh;
   margin: auto;
-  /* border: 1px solid black; */
-  /* background-color: rgb(233, 233, 233); */
 `;
 
 const Img = styled.img`
@@ -74,25 +60,17 @@ const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid rgb(180, 180, 180);
-  /* background-color: rgb(211, 211, 211) */
 `;
 
 const Content = styled.div`
   width: 50%;
   height: 85%;
   margin: auto;
-  /* border: 1px solid black; */
-  /* background-color: rgb(191, 191, 191); */
-  border-left: 1px solid rgb(180, 180, 180);
-  border-right: 1px solid rgb(180, 180, 180);
 `;
 
 const Select = styled.div`
   width: 100%;
   height: 5%;
-  /* border-bottom: 1px solid rgb(180, 180, 180); */
-  /* background-color: green; */
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -125,46 +103,18 @@ const SelectItem = styled.span`
 
 const LoginList = styled.div`
   width: 100%;
-  height: 35%;
+  height: 45%;
   border-bottom: 1px solid rgb(180, 180, 180);
-  /* border: 1px solid blue; */
-  /* background-color: rgb(9, 9, 9); */
-`;
-
-const Benefit = styled.div`
-  width: 100%;
-  height: 35%;
-  border-bottom: 1px solid rgb(180, 180, 180);
-
-  /* background-color: rgb(205, 205, 205); */
-  /* border: 1px solid black; */
-`;
-
-const BoxItem = styled.p`
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  /* background-color: yellow; */
-  display: flex;
-  justify-content: center;
-  /* border: 1px solid black; */
-`;
-
-const CouponBox = styled.div`
-  width: 100%;
-  height: 50%;
 `;
 
 const Etc = styled.div`
-  height: 25%;
+  height: 50%;
 `;
 
 const Footer = styled.div`
   width: 100%;
   height: 5%;
-  /* background-color: rgb(171, 171, 171); */
   border-top: 1px solid rgb(180, 180, 180);
-  /* border: 1px solid blue; */
 `;
 
 const Text = styled.div`
@@ -173,7 +123,6 @@ const Text = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: rgb(191, 191, 191) */
 `;
 
 export default SignUp;

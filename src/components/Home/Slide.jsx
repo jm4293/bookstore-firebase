@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
+import {TfiArrowCircleLeft, TfiArrowCircleRight} from "react-icons/tfi"
 
 const IMG_WIDTH = 900
 
@@ -8,13 +9,12 @@ function Slide() {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
-        // console.log(slideref.current.offsetWidth)
-        // const imgWidth = IMG_WIDTH;
+        // console.log(slideRef.current.offsetWidth)
         const slideRange = currentIndex * IMG_WIDTH;
         slideRef.current.style.transition = "all 0.5s ease-in-out";
         slideRef.current.style.transform = `translateX(-${slideRange}px)`;
     }, [currentIndex])
-
+    
     useEffect(() => {
         const interval = setInterval(() => {
             currentIndex === 4 ? setCurrentIndex(0) : setCurrentIndex(currentIndex + 1);
@@ -35,61 +35,43 @@ function Slide() {
 
     return (
         <Frame>
-            <Button onClick={() => movePrev()}>이전</Button>
+            <TfiArrowCircleLeft onClick={() => movePrev()} style={{margin: "auto", cursor: "pointer", scale: "1.4"}}/>
             <Content>
                 <ImgWrapper ref={slideRef}>
-                    <Img src="/images/slide/slide_1.jpg" />
-                    <Img src="/images/slide/slide_2.jpg" />
-                    <Img src="/images/slide/slide_3.jpg" />
-                    <Img src="/images/slide/slide_4.jpg" />
-                    <Img src="/images/slide/slide_5.jpg" />
+                    <Img src="/images/slide/slide_1.jpg"/>
+                    <Img src="/images/slide/slide_2.jpg"/>
+                    <Img src="/images/slide/slide_3.jpg"/>
+                    <Img src="/images/slide/slide_4.jpg"/>
+                    <Img src="/images/slide/slide_5.jpg"/>
                 </ImgWrapper>
             </Content>
-            <Button onClick={() => moveNext()}>이후</Button>
-            {/* <div>{currentIndex}</div> */}
+            <TfiArrowCircleRight onClick={() => moveNext()} style={{margin: "auto", cursor: "pointer", scale: "1.4"}}/>
         </Frame>
     )
 }
 
 const Frame = styled.div`
-    /* border: 1px solid blue; */
-    width: 100%;
-    height: 300px;
-    margin: 0 auto;
-    /* overflow: scroll; */
-    display: flex;
-`;
-
-const Button = styled.button`
-    width: 5%;
-    height: 30px;
-    margin: auto;
+  width: 100%;
+  height: 300px;
+  display: flex;
+  margin: 50px 0;
 `;
 
 const Content = styled.div`
-    overflow: hidden;
-    width: ${IMG_WIDTH}px;
-    height: 100%;
-    /* margin: auto; */
-    /* border: 1px solid violet; */
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-items: center; */
+  overflow: hidden;
+  width: ${IMG_WIDTH}px;
+  height: 100%;
 `;
 
 const ImgWrapper = styled.div`
-    /* background: ${props => props.element}; */
-    width: ${IMG_WIDTH}px;
-    height: 100%;
-    /* margin: auto; */
-    /* border: 1px solid red; */
-    display: flex;
+  width: ${IMG_WIDTH}px;
+  height: 100%;
+  display: flex;
 `;
 
 const Img = styled.img`
-    width: ${IMG_WIDTH}px;
-    height: 100%;
-    /* border: 1px solid green; */
+  width: ${IMG_WIDTH}px;
+  height: 100%;
 `;
 
 export default Slide;
