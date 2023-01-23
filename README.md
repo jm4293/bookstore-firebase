@@ -3,23 +3,23 @@
 2. 로그인 - firebase
 3. 장바구니 - localstorage
 
-## 개발언어 
+## 개발언어
 - React
 - redux-toolkit
 - firebase
 
 ## 추가 패키지
 - styled-components
-    - npm install styled-components
-    - version: 5.3.6
+  - npm install styled-components
+  - version: 5.3.6
 
 - react-router-dom
-    - npm install react-router-dom --save
-    - version: 6.4.2
+  - npm install react-router-dom --save
+  - version: 6.4.2
 
 - firebase
-    - npm install firebase
-    - version: 9.15.0
+  - npm install firebase
+  - version: 9.15.0
 
 ## 실행 방법
 - npm start
@@ -36,5 +36,9 @@
 - 로그인: SignIn.jsx -> Home.jsx
 
 ## 구현된 기능
-- 관리자 로그인: ID: admin@gmail.com, PASSWORD: 123456, 관리자 로그인시 관리자페이지 버튼이 나타남 -> 관리자 페이지에서 상품 추가 가능
-- 사용자 로그인: ID: abc@gmail.com, PASSWORD: 123456 or 회원가입하고 로그인 가능
+- 관리자 로그인
+  - ID: admin@gmail.com, PASSWORD: 123456
+  - 관리자 로그인시 관리자페이지 버튼이 나타남 -> 관리자 페이지에서 상품 추가 가능
+- 사용자 로그인
+  - ID: abc@gmail.com, PASSWORD: 123456
+  - 또는 회원가입하고 로그인 가능
