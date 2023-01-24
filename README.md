@@ -44,4 +44,4 @@
   - ID: abc@gmail.com
   - PASSWORD: 123456
   - 또는 회원가입하고 로그인 가능
-- Firebase에 저장된 상품들 홈페이지에 
+- Firebase에 저장된 상품들 홈페이지에 상품 리스트로 보여주기 
