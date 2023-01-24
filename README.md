@@ -37,8 +37,11 @@
 
 ## 구현된 기능
 - 관리자 로그인
-  - ID: admin@gmail.com, PASSWORD: 123456
+  - ID: admin@gmail.com
+  - PASSWORD: 123456
   - 관리자 로그인시 관리자페이지 버튼이 나타남 -> 관리자 페이지에서 상품 추가 가능
 - 사용자 로그인
-  - ID: abc@gmail.com, PASSWORD: 123456
+  - ID: abc@gmail.com
+  - PASSWORD: 123456
   - 또는 회원가입하고 로그인 가능
+- Firebase에 저장된 상품들 홈페이지에 상품 리스트로 보여주기 
