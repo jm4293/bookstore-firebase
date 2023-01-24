@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-// import app from '../../Firebase/firebase';
 import {db, storage} from "../../Firebase/firebase";
 import {addDoc, collection} from "firebase/firestore";
 import {ref, uploadBytes} from "firebase/storage";

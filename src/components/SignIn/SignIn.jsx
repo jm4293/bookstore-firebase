@@ -40,7 +40,7 @@ function SignIn() {
     return (
         <Frame>
             <Header>
-                <img src="/images/logo.jpeg" onClick={() => navigate('/')} style={{height: "90%", cursor: "pointer"}}/>
+                <img src="/images/logo.jpeg" onClick={() => navigate('/')} style={{height: "100%", cursor: "pointer"}}/>
             </Header>
             <Content>
                 <Select>

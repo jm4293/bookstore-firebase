@@ -12,14 +12,15 @@ function Content() {
         async function fetchData() {
             return await getDocs(collection(db, "books"));
         }
-        fetchData().then((data) => {
-           // console.log(data)
-            data.forEach(element => setList(list => [...list, element.data()]))
-        }).catch(err => console.log(err))
-        // console.log("list ", list)
-    },[])
-
-    console.log(list)
+        fetchData()
+            .then((data) => {
+                // console.log(data)
+                data.forEach(element => setList(list => [...list, element.data()]))
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, [])
 
     return (
         <Frame>
@@ -31,7 +32,7 @@ function Content() {
                 <h1>책 목록</h1>
                 <ItemWrap>
                     {
-                        list.map((element, index) => <Item key={index} title={element.title} author={element.author}  code={element.code}/>)
+                        list.map((element) => <Item title={element.title} author={element.author} code={element.code}/>)
                     }
                 </ItemWrap>
             </div>

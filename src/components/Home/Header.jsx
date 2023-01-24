@@ -81,7 +81,7 @@ function Header() {
             </Top>
             <Middle>
                 <Logo>
-                    <img src="/images/logo.jpeg" onClick={() => window.location.replace('/')} style={{height: "80%", cursor: "pointer"}}/>
+                    <img src="/images/logo.jpeg" onClick={() => window.location.replace('/')} style={{height: "100%", cursor: "pointer"}}/>
                 </Logo>
                 <Search>
                     <SearchBar>

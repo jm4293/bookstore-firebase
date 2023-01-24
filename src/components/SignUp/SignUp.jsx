@@ -11,7 +11,7 @@ function SignUp() {
     return (
         <Frame>
             <Header>
-                <Img src="/images/logo.jpeg" onClick={() => navigate('/')}/>
+                <img src="/images/logo.jpeg" onClick={() => navigate('/')} style={{height: "100%", cursor: "pointer"}}/>
             </Header>
             <Content>
                 <Select>
@@ -47,11 +47,6 @@ const Frame = styled.div`
   width: 99vw;
   height: 99vh;
   margin: auto;
-`;
-
-const Img = styled.img`
-  height: 90%;
-  cursor: pointer;
 `;
 
 const Header = styled.div`
