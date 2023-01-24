@@ -47,8 +47,7 @@ function Detail() {
                 </Left>
                 <Middle>
                     <h1>{`${item.title}`}</h1>
-                    {/*<div>{item.title}</div>*/}
-                    <img src={img}/>
+                    <StyledImg src={img}/>
                 </Middle>
                 <Right>
                     <h2>{`가격: ${item.price}원`}</h2>
@@ -91,12 +90,22 @@ const Left = styled.div`
 
 const Middle = styled.div`
   width: 40%;
+  min-width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   border-left: 1px solid black;
   border-right: 1px solid black;
+`;
+
+const StyledImg = styled.img`
+  width: 70%;
+  border-radius: 10px;
+  
+  @media screen and (max-width: 1200px){
+    width: 100%;
+  }
 `;
 
 const Right = styled.div`

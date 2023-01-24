@@ -48,7 +48,7 @@ const Frame = styled.div`
 const ItemWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
-  //margin: 20px 40px;
+  justify-content: center;
 `;
 
 export default Content;

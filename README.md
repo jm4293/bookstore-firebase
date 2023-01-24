@@ -1,7 +1,7 @@
 # 도서판매 프로젝트
 1. 회원가입 - firebase
 2. 로그인 - firebase
-3. 장바구니 - localstorage
+3. 장바구니 - firebase or localstorage
 
 ## 개발언어
 - React
@@ -25,17 +25,14 @@
 - npm start
 - https://bookstore-6c407.firebaseapp.com/
 
-## 실행 과정
-- 클라이언트 실행 -> localhost:3000 접속
+## 진행 상황
+- firebase 아이디/비밀번호 로그인 구현
+- 관리자 아이디 접속하면 관리자 페이지 버튼 구현
+- 관리자 페이지에서 상품 추가 구현
+- 홈페이지에 있는 상품 클릭시 상품 상세보기 화면 구현
+- 아이디마다 장바구니 구현을 위해 firebase에 저장 및 진행중
 
-## 시작일
-- 23.01.12
-
-## 컴포넌트 순서
-- 회원가입: SignUp.jsx -> Person.jsx -> Agree.jsx -> Register.jsx -> Home.jsx
-- 로그인: SignIn.jsx -> Home.jsx
-
-## 구현된 기능
+## 로그인 정보
 - 관리자 로그인
   - ID: admin@gmail.com
   - PASSWORD: 123456
@@ -44,4 +41,7 @@
   - ID: abc@gmail.com
   - PASSWORD: 123456
   - 또는 회원가입하고 로그인 가능
-- Firebase에 저장된 상품들 홈페이지에 상품 리스트로 보여주기 
+
+## 컴포넌트 순서
+- 회원가입: SignUp.jsx -> Person.jsx -> Agree.jsx -> Register.jsx -> Home.jsx
+- 로그인: SignIn.jsx -> Home.jsx
