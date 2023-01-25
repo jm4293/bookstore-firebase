@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import {getAuth, createUserWithEmailAndPassword} from "firebase/auth";
+import {app, db} from "../../Firebase/firebase";
+import {doc, setDoc} from "firebase/firestore";
 
 function Register() {
     const navigate = useNavigate();
@@ -9,8 +11,13 @@ function Register() {
     const [password, setPassword] = useState("");
 
     const signup = async () => {
-        const auth = getAuth();
-        await createUserWithEmailAndPassword(auth, email, password)
+        // 아이디 회원가입
+        const auth = getAuth(app);
+        await createUserWithEmailAndPassword(auth, email, password);
+
+        // 장바구니에 updateDoc을 하기위해서 미리 cart컬렉션에 아이디 UID를 등록
+        const uid = auth.currentUser;
+        await setDoc(doc(db, "cart", uid.uid), {});
         alert("회원가입 성공");
         navigate('/');
     }
@@ -89,7 +96,7 @@ const ButtonSignIn = styled.button`
   cursor: pointer;
   border-radius: 10px;
 
-  &:hover{
+  &:hover {
     background-color: rgb(85, 85, 85);
   }
 `;
@@ -105,7 +112,7 @@ const ButtonSignUp = styled.button`
   cursor: pointer;
   border-radius: 10px;
 
-  &:hover{
+  &:hover {
     background-color: rgb(238, 238, 246);
   }
 `;
