@@ -1,40 +1,59 @@
 import React, {useRef, useEffect, useState} from "react";
 import styled from "styled-components";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {AiOutlineSearch, AiOutlineShoppingCart} from "react-icons/ai"
 import {BsPersonFill} from "react-icons/bs";
+import {app} from "../../Firebase/firebase";
 import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
 import {useDispatch, useSelector} from "react-redux";
-import {TrueLogin, FalseLogin} from "../../store/store";
+import {TrueLogin, FalseLogin, changeUID, clearUID} from "../../store/store";
 
 function Header() {
     const [isChange, setIsChange] = useState(false);
-    // const [isLogin, setIsLogin] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     let scrollRef = useRef(null);
+    const navigate = useNavigate();
 
     // redux - 로그인 상태
     let isLogin = useSelector((state) => {
         return state.isLogin
     })
+
+    // redux - 로그인 UID
+    let uid = useSelector((state) => {
+        return state.UID
+    })
     let dispatch = useDispatch();
 
     // 로그인되어있으면 메뉴바 로그아웃, 로그인 안되어있으면 메뉴바 로그인 //
     useEffect(() => {
-        const auth = getAuth();
+        const auth = getAuth(app);
 
         // 관리자 페이지 활성화 설정
         onAuthStateChanged(auth, (user) => {
             if (user.uid) {
                 user.uid === process.env.REACT_APP_ADMIN ? setIsAdmin(true) : setIsAdmin(false);
-                // setIsLogin(true);
+                dispatch(changeUID(user.uid));
                 dispatch(TrueLogin());
-            } else {
-                // setIsLogin(false);
-                dispatch(FalseLogin());
             }
         });
     }, [])
+
+    // 로그아웃 클릭 //
+    const sign_out = () => {
+        const auth = getAuth();
+        signOut(auth)
+            .then(() => {
+                alert("로그아웃 성공");
+                dispatch(clearUID())
+                dispatch(FalseLogin());
+                window.location.replace('/');
+            })
+            .catch((error) => {
+                console.log(error)
+                alert("로그아웃 실패")
+            });
+    }
 
     // 스크롤할때 메뉴바 컨트롤 //
     const handleScroll = () => {
@@ -57,18 +76,6 @@ function Header() {
         };
     }, []);
 
-    // 로그아웃 클릭 //
-    const sign_out = () => {
-        const auth = getAuth();
-        signOut(auth).then(() => {
-            alert("로그아웃 성공");
-            window.location.replace('/');
-        }).catch((error) => {
-            console.log(error)
-            alert("로그아웃 실패")
-        });
-    }
-
     return (
         <Frame change={isChange}>
             <Top>
@@ -85,14 +92,16 @@ function Header() {
                     <LiTop>
                         {
                             // isLogin ? <span onClick={() => sign_out()} style={{cursor: "pointer", color: "black"}}>로그아웃</span> : <StyledLink to="/signin">로그인</StyledLink>
-                            isLogin ? <span onClick={() => sign_out()} style={{cursor: "pointer", color: "black"}}>로그아웃</span> : <StyledLink to="/signin">로그인</StyledLink>
+                            isLogin ? <span onClick={() => sign_out()} style={{cursor: "pointer", color: "black"}}>로그아웃</span> :
+                                <StyledLink to="/signin">로그인</StyledLink>
                         }
                     </LiTop>
                 </UlTop>
             </Top>
             <Middle>
                 <Logo>
-                    <img src="/images/logo.jpeg" onClick={() => window.location.replace('/')} style={{height: "100%", cursor: "pointer"}}/>
+                    <img src="/images/logo.jpeg" onClick={() => window.location.replace('/')}
+                         style={{height: "100%", cursor: "pointer"}}/>
                 </Logo>
                 <Search>
                     <SearchBar>
@@ -102,7 +111,8 @@ function Header() {
                     </SearchBar>
                     <div style={{flexGrow: "1"}}/>
                     <Basket>
-                        <AiOutlineShoppingCart  style={{transform: "scale(1.6)", marginLeft: "20px", cursor: "pointer"}}/>
+                        <AiOutlineShoppingCart onClick={() => navigate('/cart')}
+                                               style={{transform: "scale(1.6)", marginLeft: "20px", cursor: "pointer"}}/>
                     </Basket>
                     <User>
                         <BsPersonFill style={{transform: "scale(1.6)", margin: "0 30px"}}/>
@@ -122,7 +132,8 @@ function Header() {
                     <LiHidden change={isChange}>
                         {
                             // isLogin ? <span onClick={() => sign_out()} style={{cursor: "pointer"}}>로그아웃</span> : <StyledLink to="/signin">로그인</StyledLink>
-                            isLogin ? <span onClick={() => sign_out()} style={{cursor: "pointer", color: "black"}}>로그아웃</span> : <StyledLink to="/signin">로그인</StyledLink>
+                            isLogin ? <span onClick={() => sign_out()} style={{cursor: "pointer", color: "black"}}>로그아웃</span> :
+                                <StyledLink to="/signin">로그인</StyledLink>
                         }
                     </LiHidden>
                 </UlBottom>
