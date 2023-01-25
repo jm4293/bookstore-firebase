@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {useParams} from "react-router-dom";
 import {db, storage} from "../Firebase/firebase";
-import {collection, query, where, getDocs} from "firebase/firestore";
+import {collection, query, where, getDocs, doc, updateDoc, setDoc} from "firebase/firestore";
 import {ref, getDownloadURL} from "firebase/storage";
 import {BsFillCartFill} from "react-icons/bs"
 import {useSelector} from "react-redux";
@@ -19,6 +19,7 @@ function Detail() {
         async function querySnapshot() {
             return await getDocs(q);
         }
+
         querySnapshot()
             .then((data) => {
                 data.forEach(element => setItem(element.data()))
@@ -41,14 +42,27 @@ function Detail() {
         return state.isLogin
     })
 
-    const AddCart = () => {
-        isLogin ? alert("상품 추가") : alert("로그인 해주세요")
+    // redux - 로그인 UID
+    let uid = useSelector((state) => {
+        return state.UID
+    })
+
+    const AddCart = async () => {
+        if (isLogin) {
+            await updateDoc(doc(db, "cart", uid.UID.payload), {
+                [item.code]: 1
+            });
+            alert("상품 추가")
+        } else {
+            alert("로그인 해주세요")
+        }
     }
 
     return (
         <Frame>
             <Header>
-                <img src="/images/logo.jpeg" onClick={() => window.location.replace('/')} style={{height: "100%", cursor: "pointer"}}/>
+                <img src="/images/logo.jpeg" onClick={() => window.location.replace('/')}
+                     style={{height: "100%", cursor: "pointer"}}/>
             </Header>
             <Footer>
                 <Left>
@@ -112,8 +126,8 @@ const Middle = styled.div`
 const StyledImg = styled.img`
   width: 70%;
   border-radius: 10px;
-  
-  @media screen and (max-width: 1200px){
+
+  @media screen and (max-width: 1200px) {
     width: 100%;
   }
 `;

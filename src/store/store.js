@@ -1,21 +1,6 @@
 import {configureStore, createSlice} from "@reduxjs/toolkit";
 
-let user = createSlice({
-    name: "user",
-    initialState: {name: "kim", age: 30},
-    reducers: {
-        changeName(state) {
-            state.name = "jonh " + state.name
-        },
-        ageUp(state, action){
-            state.age += action.payload
-        }
-    }
-})
-export let {changeName, ageUp} = user.actions
-
-
-
+// 로그인 여부상태 확인
 let isLogin = createSlice({
     name: "isLogin",
     initialState: false,
@@ -30,9 +15,24 @@ let isLogin = createSlice({
 })
 export let {TrueLogin, FalseLogin} = isLogin.actions
 
+// 로그인 되어있는 고유 번호
+let UID = createSlice({
+    name: "UID",
+    initialState: {UID: ""},
+    reducers: {
+        changeUID(state, action) {
+            state.UID = action;
+        },
+        clearUID(state) {
+            state.UID = "";
+        }
+    }
+})
+export let {changeUID, clearUID} = UID.actions
+
 export default configureStore({
     reducer: {
-        user: user.reducer,
-        isLogin: isLogin.reducer
+        isLogin: isLogin.reducer,
+        UID: UID.reducer
     }
 })

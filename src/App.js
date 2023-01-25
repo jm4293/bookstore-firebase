@@ -8,6 +8,7 @@ import Register from './components/SignUp/Register';
 import SignIn from './components/SignIn/SignIn';
 import Admin from './components/Admin/Admin';
 import Detail from "./components/Detail";
+import Cart from "./components/Cart";
 import {Routes, Route} from "react-router-dom";
 import app from './Firebase/firebase';
 
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/signin" element={<SignIn/>}/>
                 <Route path="/admin" element={<Admin/>}/>
                 <Route path="/detail/:code" element={<Detail/>}/>
+                <Route path="/cart" element={<Cart/>}/>
             </Routes>
         </>
     );
