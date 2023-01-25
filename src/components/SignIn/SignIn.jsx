@@ -13,8 +13,7 @@ function SignIn() {
     const sign_in = async () => {
         try {
             const auth = getAuth();
-            const result = await signInWithEmailAndPassword(auth, email, password)
-            console.log(result);
+            await signInWithEmailAndPassword(auth, email, password)
             alert("로그인 되었습니다.");
             navigate('/');
         } catch (err) {
@@ -30,6 +29,9 @@ function SignIn() {
                     break;
                 case 'auth/too-many-requests' :
                     alert("너무 많은 요청 잠시만 기다려 주세요");
+                    break;
+                case 'auth/email-already-in-use' :
+                    alert("이미 존재하는 아이디 입니다");
                     break;
                 default:
                     break;
