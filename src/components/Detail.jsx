@@ -4,14 +4,15 @@ import {useParams} from "react-router-dom";
 import {db, storage} from "../Firebase/firebase";
 import {collection, query, where, getDocs} from "firebase/firestore";
 import {ref, getDownloadURL} from "firebase/storage";
-
+import {BsFillCartFill} from "react-icons/bs"
+import {useSelector} from "react-redux";
 
 function Detail() {
     let {code} = useParams()
     const [item, setItem] = useState({});
     const [img, setImg] = useState("");
-    console.log(code)
 
+    // 상품 정보 불러오기
     useEffect(() => {
         const q = query(collection(db, "books"), where("code", "==", code));
 
@@ -35,6 +36,15 @@ function Detail() {
             })
     }, [])
 
+    // redux - 로그인 상태
+    let isLogin = useSelector((state) => {
+        return state.isLogin
+    })
+
+    const AddCart = () => {
+        isLogin ? alert("상품 추가") : alert("로그인 해주세요")
+    }
+
     return (
         <Frame>
             <Header>
@@ -53,8 +63,8 @@ function Detail() {
                     <h2>{`가격: ${item.price}원`}</h2>
                     <h4>{`출판일: ${item.release}`}</h4>
                     <h4>{`코드: ${item.code}`}</h4>
+                    <BsFillCartFill onClick={() => AddCart()} style={{scale: "1.5", cursor: "pointer"}}/>
                 </Right>
-
             </Footer>
         </Frame>
     )
